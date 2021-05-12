@@ -15,5 +15,5 @@ kubectl describe pod cpu-demo-1
 # crossing the limit 
 kubectl apply -f crosingTheLimitPod.yml
 kubectl get pods
-kukbectl exec -it ubuntu -- /bin/bash
+kubectl exec -it pod/ubuntu -- /bin/bash
 :(){ :|:& };:
