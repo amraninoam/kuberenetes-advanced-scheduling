@@ -3,7 +3,7 @@
 ## Pod request 1 cpu
 ```sh
 # Schedule the pod with 1 CPU request
-kubectl apply -f pod-1-CPU-request.yml 
+kubectl create -f pod-1-CPU-request.yml --save-config
 ```
 ```sh
 # Check the pod is up and running
@@ -16,21 +16,21 @@ kubectl describe pod pod1cpu | grep Node
 kubectl describe node <node_name>
 ```
 
-## Pod request 80 cpu
+## Pod request 80 cpus
 ```sh
-# Schedule the pod with 80 CPU request
-kubectl apply -f pod-80-CPU-request.yml
+# Schedule the pod with 80 CPUs request
+kubectl create -f pod-80-CPUs-request.yml --save-config
 ```
 ```sh
 # Check if the Pod is running and see describe for more info
 kubectl get pods
-kubectl describe pod pod80cpu
+kubectl describe pod pod80cpus
 ```
 
 ## Installing metrics server for watching pod memory and CPU
 ```sh
 # Install a metrics server for watching pods CPU and memory usage
-kubectl apply -f metrics-server.yaml
+kubectl create -f metrics-server.yaml --save-config
 ```
 ```sh
 # Check if its running
@@ -39,8 +39,8 @@ kubectl get deployment metrics-server -n kube-system
 
 ## Crossing the CPU limit 
 ```sh
-# Schedule the pod with 100 CPU Limit
-kubectl apply -f pod-CPU-limit.yml
+# Schedule the pod with 100m CPU Limit
+kubectl create -f pod-CPU-limit.yml --save-config
 ```
 ```sh
 # check the pod is running
@@ -59,7 +59,7 @@ kubectl exec -it pod/ubuntucpu -- /bin/bash
 ## Change the Limit to 200 and watch what happens
 - Inside pod-CPU-limit.yml change row no.14 to 200 and save
 ```sh
-# Schedule the pod with 200 CPU Limit
+# Schedule the pod with 200m CPU Limit
 kubectl apply -f pod-CPU-limit.yml
 ```
 ```sh 
@@ -79,7 +79,7 @@ kubectl exec -it pod/ubuntucpu -- /bin/bash
 ## Crossing the memory limit
 ```sh
 # Schedule the pod with 100Mib memory Limit
-kubectl apply -f pod-memory-limit.yml
+kubectl create -f pod-memory-limit.yml --save-config
 ```
 ```sh
 # check the pod is running
