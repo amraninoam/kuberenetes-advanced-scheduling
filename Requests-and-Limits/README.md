@@ -1,6 +1,6 @@
 # Requests and Limits
 
-## Pod request 1 cpu:
+## Pod request 1 cpu
 ```sh
 # Schedule the pod with 1 CPU request
 kubectl apply -f pod-1-CPU-request.yml 
