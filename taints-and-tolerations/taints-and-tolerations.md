@@ -1,32 +1,47 @@
 # Taints and Tolerations
-## Aliases
-> alias kgpn='kubectl get pods -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.nodeName}{"\n"}{end}'"'"''
+## Set Aliases
+Add these aliases to your session
+```ssh
+alias kgpn='kubectl get pods -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.nodeName}{"\n"}{end}'"'"''
+alias kgnot='kubectl get nodes -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.taints[*].key}:{@.spec.taints[*].value}-{@.spec.taints[*].effect}{"\n"}{end}'"'"''
+```
 
-> alias kgnot='kubectl get nodes -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.taints[*].key}:{@.spec.taints[*].value}-{@.spec.taints[*].effect}{"\n"}{end}'"'"''
 
-
+## Label the second worker
 Add label to the second worker, so our pod will be scheduled on it (using selector)
-> kubectl label nodes advanced-scheduling-worker2 workernumber=2
+```ssh
+kubectl label nodes advanced-scheduling-worker2 workernumber=2
+```
 
+## Schedulg workload
 Schedule the pod with tolerations
-> kubectl create -f deployment-without-tolerations.yaml
+```ssh
+kubectl create -f deployment-without-tolerations.yaml
+```
 
 Check which node this pod was scheduled on
-> kgpn
+```ssh
+kgpn
+```
 
 Schedule the pod with tolerations
-> kubectl create -f taints-and-tolerations/deployment-with-tolerations.yaml
+```ssh
+kubectl create -f taints-and-tolerations/deployment-with-tolerations.yaml
+```
 
 Check which node this pod was scheduled on
-> kgpn
+```ssh
+kgpn
+```
 
 Add taint to the second worker
-> kubectl taint nodes advanced-scheduling-worker2 somekey=somevalue:NoExecute
+```ssh
+kubectl taint nodes advanced-scheduling-worker2 somekey=somevalue:NoExecute
+```
 
-Clean our doings
-> kubectl delete -f taints-and-tolerations/deployment-with-tolerations.yaml
-
-> kubectl delete -f taints-and-tolerations/deployment-without-tolerations.yaml
-
-> kubectl taint nodes advanced-scheduling-worker2 somekey-
-
+## Clean our doings
+```ssh
+kubectl delete -f taints-and-tolerations/deployment-with-tolerations.yaml
+kubectl delete -f taints-and-tolerations/deployment-without-tolerations.yaml
+kubectl taint nodes advanced-scheduling-worker2 somekey-
+```
