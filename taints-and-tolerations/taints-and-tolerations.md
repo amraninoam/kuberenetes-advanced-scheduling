@@ -1,48 +1,93 @@
 # Taints and Tolerations
-## Set Aliases
+# Set Aliases
 Add these aliases to your session
 ```sh
+# kgpn alias returns all pods and their node hosts
 alias kgpn='kubectl get pods -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.nodeName}{"\n"}{end}'"'"''
+# kgnot alias returns all nodes and their taints.
 alias kgnot='kubectl get nodes -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.taints[*].key}:{@.spec.taints[*].value}-{@.spec.taints[*].effect}{"\n"}{end}'"'"''
 ```
 
-
-## Label the second worker
-Add label to the second worker, so our pod will be scheduled on it (using selector)
+# NoExecute (hard) Taints example
 ```sh
-kubectl label nodes advanced-scheduling-worker2 workernumber=2
+# Schedule the pod with tolerations
+kubectl create -f taints-and-tolerations/deployment-without-tolerations.yaml --save-config
 ```
 
-## Schedulg workload
-Schedule the pod with tolerations
 ```sh
-kubectl create -f taints-and-tolerations/deployment-without-tolerations.yaml
-```
-
-Check which node this pod was scheduled on
-```sh
+# Check which node this pod was scheduled on
 kgpn
 ```
 
-Schedule the pod with tolerations
 ```sh
-kubectl create -f taints-and-tolerations/deployment-with-tolerations.yaml
+# Schedule the pod with tolerations
+kubectl create -f taints-and-tolerations/deployment-with-tolerations.yaml --save-config
 ```
 
-Check which node this pod was scheduled on
 ```sh
+# Check which node this pod was scheduled on
 kgpn
 ```
 
-Add taint to the second worker
 ```sh
-kubectl taint nodes advanced-scheduling-worker2 somekey=somevalue:NoExecute
+# Add taint to the  worker
+kubectl taint nodes advanced-scheduling-worker somekey=somevalue:NoExecute
 ```
 
-## Clean our doings
 ```sh
+# Check which pods are still running and where
+kgpn
+```
+
+# NoSchedule (soft) Taints example
+```sh
+# Schedule the pod with tolerations
+kubectl create -f taints-and-tolerations/deployment-without-tolerations.yaml --save-config
+```
+
+```sh
+# Check which node this pod was scheduled on
+kgpn
+```
+
+```sh
+# Schedule the pod with tolerations
+kubectl create -f taints-and-tolerations/deployment-with-tolerations.yaml --save-config
+```
+
+```sh
+# Check which node this pod was scheduled on
+kgpn
+```
+
+```sh
+# Add taint to the second worker
+kubectl taint nodes advanced-scheduling-worker somekey=somevalue:NoSchedule
+```
+
+```sh
+# Check which pods are still running and where
+kgpn
+```
+> Please note that no pods have been moved
+
+```sh
+# Now lets perform a a rolling update to our deployment
+kubectl apply -f taints-and-tolerations/deployment-without-tolerations-alpine.yaml
+```
+
+```sh
+# Check which pods are still running and where
+kgpn
+```
+> Please note the deployment will fail, since the new pod cannot be scheduled. Thereof, the old pod will not be removed (always up!)
+
+# Clean our doings
+```sh
+# Clean our doings
 kubectl delete -f taints-and-tolerations/deployment-with-tolerations.yaml
 kubectl delete -f taints-and-tolerations/deployment-without-tolerations.yaml
-kubectl label nodes advanced-scheduling-worker2 workernumber-
-kubectl taint nodes advanced-scheduling-worker2 somekey-
+kubectl delete -f taints-and-tolerations/deployment-without-tolerations-alpine.yaml
+kubectl label nodes advanced-scheduling-worker workernumber-
+kubectl taint nodes advanced-scheduling-worker somekey-
 ```
