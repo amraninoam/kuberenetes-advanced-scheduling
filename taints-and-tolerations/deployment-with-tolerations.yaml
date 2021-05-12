@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-with-tolerations
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx 
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+      tolerations:
+      - key: "somekey"
+        operator: "Equal"
+        value: "somevalue"
+      nodeSelector:
+        workernumber: "2"
