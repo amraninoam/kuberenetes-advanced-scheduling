@@ -22,6 +22,5 @@ spec:
       - key: "somekey"
         operator: "Equal"
         value: "somevalue"
-        effect: "NoExecute"
       nodeSelector:
         workernumber: "2"
