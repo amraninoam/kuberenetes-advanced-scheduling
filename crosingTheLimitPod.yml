@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu:21.04
+    args:
+    - sleep
+    - "1000000000"
+    resources:
+      limits:
+        cpu: "0.1"
+      requests:
+        cpu: "0.1"
