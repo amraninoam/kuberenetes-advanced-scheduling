@@ -39,6 +39,14 @@ kubectl taint nodes advanced-scheduling-worker somekey=somevalue:NoExecute
 kgpn
 ```
 
+```sh
+# Clean our doings
+kubectl delete -f taints-and-tolerations/deployment-with-tolerations.yaml
+kubectl delete -f taints-and-tolerations/deployment-without-tolerations.yaml
+kubectl label nodes advanced-scheduling-worker workernumber-
+kubectl taint nodes advanced-scheduling-worker somekey-
+```
+
 # NoSchedule (soft) Taints example
 ```sh
 # Schedule the pod with tolerations
