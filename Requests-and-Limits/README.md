@@ -69,15 +69,28 @@ kubectl get pods
 ```sh
 # Open a new terminal for watching the pods CPU usage
 kubectl top pod ubuntucpu
+```
+```sh
+# "Drop" the fork Bomb and see what happens to the CPU
 kubectl exec -it pod/ubuntucpu -- /bin/bash
 :(){ :|:& };:
 ```
 
 ## Crossing the memory limit
 ```sh
+# Schedule the pod with 100Mib memory Limit
 kubectl apply -f pod-memory-limit.yml
+```
+```sh
+# check the pod is running
 kubectl get pods
+```
+```sh
+# Open a new terminal for watching the pods memory usage
 kubectl top pod ubuntumemory
+```
+```sh
+# "Drop" the fork Bomb and see what happens to the memory
 kubectl exec -it pod/ubuntumemory -- /bin/bash
 :(){ :|:& };:
 ```
