@@ -17,6 +17,3 @@ spec:
       containers:
       - name: nginx
         image: nginx:alpine
-        imagePullPolicy: IfNotPresent
-      nodeSelector:
-        workernumber: "2"

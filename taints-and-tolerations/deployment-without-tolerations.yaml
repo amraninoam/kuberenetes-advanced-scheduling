@@ -18,5 +18,3 @@ spec:
       - name: nginx
         image: nginx
         imagePullPolicy: IfNotPresent
-      nodeSelector:
-        workernumber: "2"
