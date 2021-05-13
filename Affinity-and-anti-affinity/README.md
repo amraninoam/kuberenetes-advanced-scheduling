@@ -72,7 +72,7 @@ kubectl delete -f podNodeRequierdAffinity.yml
 ```
 
 
-# Pod Affnity
+## Pod Affnity
 
 ### Pod required affinity
 
@@ -162,7 +162,7 @@ kubectl delete -f podS2Security.yml
 
 
 
-# Pod Anty Affinity
+## Pod Anty Affinity
 
 ```sh
 # Schedule the pod with a lable of security=S1
