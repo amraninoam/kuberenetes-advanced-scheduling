@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-s2-security
+  labels:
+    security: S2
+spec:
+  containers:
+  - name: pod-s2-security
+    image: docker.io/ocpqe/hello-pod
+  nodeSelector:
+    kubernetes.io/hostname: advanced-scheduling-worker2
