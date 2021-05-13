@@ -27,6 +27,13 @@ kubectl get pods
 kubectl describe pod pod80cpus
 ```
 
+## Clean our doings
+```sh
+# Clean our doings
+kubectl delete -f pod-80-CPUs-request.yml
+kubectl delete -f pod-1-CPU-request.yml
+```
+
 ## Installing metrics server for watching pod memory and CPU
 ```sh
 # Install a metrics server for watching pods CPU and memory usage
@@ -93,4 +100,12 @@ kubectl top pod ubuntumemory
 # "Drop" the fork Bomb and see what happens to the memory
 kubectl exec -it pod/ubuntumemory -- /bin/bash
 :(){ :|:& };:
+```
+
+## Clean our doings
+```sh
+# Clean our doings
+kubectl delete -f pod-memory-limit.yml
+kubectl delete -f pod-CPU-limit.yml
+kubectl delete -f metrics-server.yaml
 ```
