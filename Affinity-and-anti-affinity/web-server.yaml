@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-server
+spec:
+  selector:
+    matchLabels:
+      app: web-store
+  replicas: 3
+  strategy:
+    # type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # how many pods we can add at a time
+      maxUnavailable: 2  # how many pods can be unavailable
+                         # during the rolling update
+  template:
+    metadata:
+      labels:
+        app: web-store
+    spec:
+      affinity:
+        podAntiAffinity:
+          # strong isolation from us (web-store)
+          requiredDuringSchedulingIgnoredDuringExecution: 
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - web-store
+            topologyKey: "kubernetes.io/hostname"
+          
+          # # soft isolation from us (web-store)
+          # preferredDuringSchedulingIgnoredDuringExecution:
+          # - weight: 100  
+          #   podAffinityTerm:
+          #     labelSelector:
+          #       matchExpressions:
+          #       - key: app
+          #         operator: In
+          #         values:
+          #         - web-store
+          #     topologyKey: "kubernetes.io/hostname"
+        podAffinity:
+          # strong affinity to redis (store)
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - store
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: web-app
+        image: nginx:1.16-alpine

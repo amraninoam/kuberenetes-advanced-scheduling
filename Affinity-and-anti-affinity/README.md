@@ -4,22 +4,22 @@
 
 ### Setup
 ```sh
-# Create our cluster with 3 nodes
+# Create our cluster with 4 nodes
 kind create cluster --config cluster.yml
 ```
 ```sh
-# Check the hostname of the pods
-kubectl get nodes --show-labels | grep hostname
+# Check the default label kubernetes.io/hostname of the pods
+kubectl get nodes --show-labels | grep kubernetes.io/hostname=
 ```
 ```sh
 # kgpn alias returns all pods and their node hosts
-alias kgpn='kubectl get pods -o jsonpath='"'"'{range .items[*]}{@.metadata.name}{" "}{@.spec.nodeName}{"\n"}{end}'"'"''
+alias kgpn='kubectl get pod -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName'
 ```
 
-### Node requierd affinity
+### Requierd node affinity
 ```sh
 # Schedule the pod with a required node affinity of kubernetes.io/hostname=advanced-scheduling-worker2  
-kubectl create -f podNodeRequierdAffinity.yml --save-config
+kubectl create -f podRequierdNodeAffinity.yml --save-config
 ```
 ```sh
 # Check if the pod is running
@@ -30,11 +30,11 @@ kubectl get pods
 kgpn
 ```
 
-### Node prefferd affinity
+### Prefferd node affinity
 
 ```sh
 # Schedule the pod with a Prefferd node affinity of kubernetes.io/hostname=advanced-scheduling-worker3
-kubectl create -f podNodePrefferdAffinity.yml --save-config
+kubectl create -f podPrefferdNodeAffinity.yml --save-config
 ```
 ```sh
 # Check if the pod is running
@@ -48,15 +48,15 @@ kgpn
 ### Clean our doings
 ```sh
 # Clean our doings
-kubectl delete -f podNodeRequierdAffinity.yml
-kubectl delete -f podNodePrefferdAffinity.yml
+kubectl delete -f podRequierdNodeAffinity.yml
+kubectl delete -f podPrefferdNodeAffinity.yml
 ```
 
 ### optional - required node Affinity
 ```sh
 # change PodNodeRequierdAffinity.yml line n.14 from worker2 to worker3
 # Schedule the pod with a required node affinity of kubernetes.io/hostname=advanced-scheduling-worker3
-kubectl create -f PodNodeRequierdAffinity.yml --save-config
+kubectl create -f PodRequierdNodeAffinity.yml --save-config
 ```
 ```sh
 # Check if the pod is running
@@ -68,7 +68,7 @@ kubectl describe pod node-required-affinity
 ```
 ```sh
 # Clean our doings
-kubectl delete -f podNodeRequierdAffinity.yml
+kubectl delete -f podRequierdNodeAffinity.yml
 ```
 
 
