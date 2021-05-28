@@ -27,7 +27,8 @@ kgpn
 ### Create web-server deployment
 
 ```sh
-# Schedule the web-server deployment with a required pod anty affinity of living next to it's self and required pod affinity of living next to a redis pod
+# Schedule the web-server deployment with a required pod anty affinity of living next to it's self 
+# and required pod affinity of living next to a redis pod
  kubectl create -f web-server.yaml --save-config
 ```
 ```sh
