@@ -8,12 +8,12 @@ spec:
       app: web-store
   replicas: 3
   strategy:
-    # type: Recreate
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1        # how many pods we can add at a time
-      maxUnavailable: 2  # how many pods can be unavailable
-                         # during the rolling update
+    type: Recreate
+    # type: RollingUpdate
+    # rollingUpdate:
+    #   maxSurge: 1        # how many pods we can add at a time
+    #   maxUnavailable: 1  # how many pods can be unavailable
+    #                      # during the rolling update
   template:
     metadata:
       labels:
