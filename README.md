@@ -7,6 +7,6 @@ git clone https://github.com/amraninoam/kuberenetes-advanced-scheduling.git
 ```
 
 - [Requests And Limits](Requests-and-Limits/)
-- [Taints and Tolerations](taints-and-tolerations/)
+- [Taints And Tolerations](taints-and-tolerations/)
 - [Affinity and anti affinity](Affinity-and-anti-affinity/)
 
